@@ -16,7 +16,8 @@ POSTGRES_DB = "postgres"
 def create_app():
   app = Flask(__name__)
   app.config['SECRET_KEY'] = 'lolxd123'
-  app.config['SQLALCHEMY_DATABASE_URI'] = f'postgres://{POSTGRES_USER}:{POSTGRES_PW}@{POSTGRES_URL}/{POSTGRES_DB}'
+  #app.config['SQLALCHEMY_DATABASE_URI'] = f'postgres://{POSTGRES_USER}:{POSTGRES_PW}@{POSTGRES_URL}/{POSTGRES_DB}'
+  app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{POSTGRES_DB}'
   app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
   db.init_app(app)
   
@@ -28,7 +29,7 @@ def create_app():
   
   from src.models import User
   
-  # create_database(app)
+  create_database(app)
   
   login_manager = LoginManager()
   login_manager.login_view = 'auth.login'
@@ -39,3 +40,8 @@ def create_app():
     return User.query.get(int(id))
   
   return app
+
+def create_database(app):
+    if not path.exists('src/' + POSTGRES_PATH):
+        db.create_all(app=app)
+        print('success: created database')
