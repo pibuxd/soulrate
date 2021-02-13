@@ -1,0 +1,17 @@
+# editor
+.vs/
+.vscode/
+.idea/
+.idea_modules/
+
+# pycache binaries
+.pytest_cache/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# python venvs
+.env
+.venv
+env/
+venv/
