@@ -10,7 +10,7 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login')
 def login():
-  name = 'test'
+  name = 'kalis'
   password = 'xd'
   
   user = User.query.filter_by(name=name).first()

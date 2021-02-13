@@ -17,7 +17,7 @@ def create_app():
   app = Flask(__name__)
   app.config['SECRET_KEY'] = 'lolxd123'
   #app.config['SQLALCHEMY_DATABASE_URI'] = f'postgres://{POSTGRES_USER}:{POSTGRES_PW}@{POSTGRES_URL}/{POSTGRES_DB}'
-  app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{POSTGRES_DB}'
+  app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{POSTGRES_PATH}'
   app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
   db.init_app(app)
   
