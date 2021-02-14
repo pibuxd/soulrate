@@ -8,10 +8,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 auth = Blueprint('auth', __name__)
 
 
-@auth.route('/login')
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
-  name = request.form.get('name')
-  password = request.form.get('password')
+  '''
+  Login user to service
+  '''
+  name = request.form.get('name', None)
+  password = request.form.get('password', None)
   
   user = User.query.filter_by(name=name).first()
   
@@ -28,8 +31,11 @@ def login():
   return render_template("login.html")
 
 
-@auth.route('/logout', methods=['POST'])
+@auth.route('/logout', methods=['GET', 'POST'])
 def logout():
+  '''
+  Logout user from service
+  '''
   if request.method == 'POST':
     if current_user.is_authenticated:
       logout_user()
@@ -39,6 +45,9 @@ def logout():
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
+  '''
+  Create new object user and login to service
+  '''
   if request.method == 'POST':
     name = request.form.get('name', None)
     password = request.form.get('password', None)
@@ -60,5 +69,3 @@ def sign_up():
       db.session.commit()
       login_user(new_user, remember=True)
       print(f'log: account \"{name}\" created')
-      
-    return "XD"
