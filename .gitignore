@@ -16,5 +16,6 @@ __pycache__/
 env/
 venv/
 
-# database
+# databases
 *.db
+*.sqlite3

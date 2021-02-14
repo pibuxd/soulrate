@@ -1,19 +1,22 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from os import path, environ
 from flask_login import LoginManager
+from . import db
 
-db = SQLAlchemy()
 
-# the values of mysql
+# the values of postgresql
 POSTGRES_PATH = "database.db"
 POSTGRES_URL = "localhost:5432"
 POSTGRES_USER = "postgres"
 POSTGRES_PW = "postgres"
 POSTGRES_DB = "postgres"
 
+
 def create_app():
+  '''
+  Creates flask app to serve it
+  '''
   app = Flask(__name__)
   app.config['SECRET_KEY'] = 'lolxd123'
   #app.config['SQLALCHEMY_DATABASE_URI'] = f'postgres://{POSTGRES_USER}:{POSTGRES_PW}@{POSTGRES_URL}/{POSTGRES_DB}'
@@ -23,9 +26,11 @@ def create_app():
   
   from src.views import views
   from src.auth import auth
+  from src.profile import profile
   
   app.register_blueprint(views, url_prefix='/')
   app.register_blueprint(auth, url_prefix='/')
+  app.register_blueprint(profile, url_prefix='/')
   
   from src.models import User
   
@@ -42,6 +47,6 @@ def create_app():
   return app
 
 def create_database(app):
-    if not path.exists('src/' + POSTGRES_PATH):
+    if not path.exists('/'+POSTGRES_PATH):
         db.create_all(app=app)
         print('success: created database')

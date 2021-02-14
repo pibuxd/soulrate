@@ -1,17 +1,18 @@
-from flask import Blueprint
+from flask import Blueprint, render_template, flash
 from flask_login import current_user, login_required
+from src.models import User
+from . import db
+
 
 views = Blueprint('views', __name__)
 
+
 @views.route('/')
 def home():
-  if current_user.is_authenticated:
-    return "hi user"
-  else:
-    return "hi guest"
+  text = "hi guest"
   
-
-@views.route('/rate')
-@login_required
-def rate():
-  return 'jd'
+  if current_user.is_authenticated:
+    text = "hi user"
+    
+  return text
+  
