@@ -5,22 +5,20 @@ from flask_login import LoginManager
 from . import db
 
 
-# the values of postgresql
-POSTGRES_PATH = "database.db"
-POSTGRES_URL = "localhost:5432"
-POSTGRES_USER = "postgres"
-POSTGRES_PW = "postgres"
-POSTGRES_DB = "postgres"
-
-
 def create_app():
   '''
   Creates flask app to serve it
   '''
+  # the values of Postgresql
+  POSTGRES_PATH = "database.db"
+  POSTGRES_URL = "localhost:5432"
+  POSTGRES_USER = "postgres"
+  POSTGRES_PW = "postgres"
+  POSTGRES_DB = "postgres"
+  
   app = Flask(__name__)
   app.config['SECRET_KEY'] = 'lolxd123'
-  #app.config['SQLALCHEMY_DATABASE_URI'] = f'postgres://{POSTGRES_USER}:{POSTGRES_PW}@{POSTGRES_URL}/{POSTGRES_DB}'
-  app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{POSTGRES_PATH}'
+  app.config['SQLALCHEMY_DATABASE_URI'] = f'postgres://{POSTGRES_USER}:{POSTGRES_PW}@{POSTGRES_URL}/{POSTGRES_DB}'
   app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
   db.init_app(app)
   
@@ -34,7 +32,9 @@ def create_app():
   
   from src.models import User
   
-  create_database(app)
+  if not path.exists('/'+POSTGRES_PATH):
+    db.create_all(app=app)
+    print('success: created database')
   
   login_manager = LoginManager()
   login_manager.login_view = 'auth.login'
@@ -45,8 +45,3 @@ def create_app():
     return User.query.get(int(id))
   
   return app
-
-def create_database(app):
-    if not path.exists('/'+POSTGRES_PATH):
-        db.create_all(app=app)
-        print('success: created database')
