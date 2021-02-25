@@ -1,18 +1,25 @@
-from flask import Blueprint, render_template, flash
+from flask import Blueprint, flash, render_template, json
 from flask_login import current_user, login_required
-from src.models import User
-from . import db
 
+from src.models import User
+
+from . import db
 
 views = Blueprint('views', __name__)
 
 
 @views.route('/')
 def home():
-  text = "hi guest"
-  
-  if current_user.is_authenticated:
-    text = "hi user"
+  if not current_user.is_authenticated:
+    return render_template("home.html", username="guest")
     
-  return text
+  username = current_user.name
+  rating = current_user.rating
+  
+  names = []
+  
+  for name in User.query.all():
+    names.append(name.name)
+  
+  return render_template("home.html", username=username, rating=rating, names=json.dumps(names))
   

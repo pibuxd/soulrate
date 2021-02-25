@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block head %}
+
+<script src="{{ url_for('static', filename='js/search.js') }}"></script>
+{% endblock %} {% block content %}
+<h1>Hi {{ username }}!</h1>
+
+{% if username != "guest" %}
+<p style="font-size:20px;">Your rating is <b>{{ rating }}</b></p>
+
+<h2>Search for a user:</h2>
+<form autocomplete="off" action="/">
+    <div class="autocomplete" style="width:300px;">
+        <input id="myInput" type="text" placeholder="Username">
+    </div>
+    <input type="submit" onclick="redirectProfile()" value="Search">
+</form>
+
+<script type="text/javascript ">
+    var usernames = JSON.parse('{{ names|safe }}');
+    console.log(usernames)
+    autocomplete(document.getElementById("myInput"), usernames);
+</script>
+
+{% else %}
+<p style="font-size:20px; ">You have to be logged in to evaluate others</p>
+
+{% endif %} {% endblock %}
