@@ -53,6 +53,22 @@ input[type=submit] {
     border-radius: 15px;
 }
 
+button[type=uprate] {
+    border: 3px solid transparent;
+    background-color: #98D7C2;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+button[type=downrate] {
+    border: 3px solid transparent;
+    background-color: #E43D40;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
 .autocomplete-items {
     position: absolute;
     border: 1px solid #d4d4d4;

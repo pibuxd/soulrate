@@ -1,3 +1,8 @@
+/**
+ * Returns strings that can complete input
+ * @param {*} inp input from form
+ * @param {*} arr array with available strings
+ */
 function autocomplete(inp, arr) {
     var currentFocus;
     inp.addEventListener("input", function(e) {
@@ -72,7 +77,7 @@ function autocomplete(inp, arr) {
 }
 
 /**
- * Redirects to loaded input
+ * Redirects to loaded input profile
  */
 function redirectProfile() {
     var input = document.getElementById("myInput").value;

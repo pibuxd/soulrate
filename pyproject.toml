@@ -1,0 +1,3 @@
+[tool.pytest.ini_options]
+	console_output_style = "count"
+	addopts = "--verbose -rfpe --no-summary --color=auto"

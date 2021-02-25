@@ -1,5 +1,15 @@
-{% extends "base.html" %} {% block title %}Profile {{ current_user.name }}{% endblock %} {% block content %}
-<p style="font-size:20px;">rating of <b>{{ username }}</b> is <b>{{ rating }}</b></p>
+{% extends "base.html" %} {% block title %}Profile {{ current_user.name }}{% endblock %} {% block head %}
 
+<script src="{{ url_for('static', filename='js/rating.js') }}"></script>
+{% endblock %} {% block content %}
+<p style="font-size:20px;">rating of <b>{{ username }}</b> is
+    <p id="rating"></p> <b>
+        </b>
+</p>
 
-{% endblock %}
+<script>
+    getRating('{{ username }}');
+</script>
+
+<button type="uprate" onclick="uprate('{{ username }}')">Uprate</button>
+<button type="downrate" onclick="downrate('{{ username }}')">Downrate</button> {% endblock %}
