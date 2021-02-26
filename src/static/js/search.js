@@ -81,5 +81,6 @@ function autocomplete(inp, arr) {
  */
 function redirectProfile() {
     var input = document.getElementById("myInput").value;
+    console.log(input)
     location.assign(`/${input}`)
 }

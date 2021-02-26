@@ -1,23 +1,27 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block head %}
 
 <script src="{{ url_for('static', filename='js/search.js') }}"></script>
+<script src="{{ url_for('static', filename='js/rating.js') }}"></script>
+
 {% endblock %} {% block content %}
 <h1>Hi {{ username }}!</h1>
 
 {% if username != "guest" %}
-<p style="font-size:20px;">Your rating is <b>{{ rating }}</b></p>
+<p style="font-size:20px;">Your rating is <b id="rating">{{ rating }}</b></p>
 
 <h2>Search for a user:</h2>
-<form autocomplete="off" action="/">
+<form autocomplete="off" action="javascript:redirectProfile()">
     <div class="autocomplete" style="width:300px;">
         <input id="myInput" type="text" placeholder="Username">
     </div>
-    <input type="submit" onclick="redirectProfile()" value="Search">
+    <button type="submit">Search</button>
 </form>
 
 <script type="text/javascript ">
+    getRating('{{ username }}')
+    asyncGetRating('{{ username }}', 2)
     var usernames = JSON.parse('{{ names|safe }}');
-    console.log(usernames)
+    //console.log(usernames)
     autocomplete(document.getElementById("myInput"), usernames);
 </script>
 

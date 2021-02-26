@@ -2,13 +2,12 @@
 
 <script src="{{ url_for('static', filename='js/rating.js') }}"></script>
 {% endblock %} {% block content %}
-<p style="font-size:20px;">rating of <b>{{ username }}</b> is
-    <p id="rating"></p> <b>
-        </b>
+<p style="font-size:20px;">rating of <b>{{ username }}</b> is <b id="rating"></b>
 </p>
 
 <script>
-    getRating('{{ username }}');
+    getRating('{{ username }}')
+    asyncGetRating('{{ username }}');
 </script>
 
 <button type="uprate" onclick="uprate('{{ username }}')">Uprate</button>
