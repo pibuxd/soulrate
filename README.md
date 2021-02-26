@@ -32,7 +32,7 @@
 
 You can create an account then you can start rating other users
 
-## Instalation
+## Installation
 
 Using pip
 
