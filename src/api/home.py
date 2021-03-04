@@ -1,17 +1,16 @@
-from flask import Blueprint, flash, render_template, json
+from flask import Blueprint, Response, json
 from flask_login import current_user, login_required
-
 from src.models import User
 
-from . import db
+from .. import db
 
 views = Blueprint('views', __name__)
 
 
-@views.route('/')
+@views.route('/home')
 def home():
   if not current_user.is_authenticated:
-    return render_template("home.html", username="guest")
+    return json.dumps({"username": "guest"})
     
   username = current_user.name
   rating = current_user.rating
@@ -21,5 +20,4 @@ def home():
   for name in User.query.all():
     names.append(name.name)
   
-  return render_template("home.html", username=username, rating=rating, names=json.dumps(names))
-  
+  return json.dumps({"username":username, "rating":rating, "names":names})
