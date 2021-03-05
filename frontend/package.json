@@ -11,6 +11,7 @@
     "@smartweb/vue-flash-message": "^0.6.10",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "serve": "^11.3.2",
     "vue": "^2.6.11",
     "vue-axios": "^3.2.4",
     "vue-router": "^3.2.0"
