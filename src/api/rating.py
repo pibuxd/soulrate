@@ -1,5 +1,5 @@
-from flask import Blueprint, Response, json
-from flask_login import current_user, login_required
+from flask import Blueprint, Response, json, request
+from flask_cors import cross_origin
 from src.models import User
 from src.rating.utils import change_rating
 
@@ -9,17 +9,20 @@ rating = Blueprint('rating', __name__)
 
 
 @rating.route('/uprate/<name>')
+@cross_origin()
 def uprate(name:str):
   '''
   Uprate the User's rating (increase)
   :param name: the User's name
   '''
-  if current_user.is_authenticated:
-    uprated = change_rating(name, 1)
+  token = request.cookies.get("token")
+  
+  if token: # !LOGGED
+    uprated = change_rating(name, 1, token=token)
   else:
     return Response(status=401) # unauthorized
   
-  user = User.query.filter_by(name=name).first()
+  user = User.query.filter_by(token=token).first()
   
   if not user:
     return Response(status=404) # doesn't exists
@@ -33,13 +36,16 @@ def uprate(name:str):
   
   
 @rating.route('/downrate/<name>')
+@cross_origin()
 def downrate(name:str):
   '''
   Downrate the User's rating (decrease)
   :param name: the User's name
   '''
-  if current_user.is_authenticated:
-    downrated = change_rating(name, -1)
+  token = request.cookies.get("token")
+  
+  if token: # !LOGGED:
+    downrated = change_rating(name, -1, token=token)
   else:
     return Response(status=401) # unauthorized
   
@@ -57,6 +63,7 @@ def downrate(name:str):
   
 
 @rating.route('/rating/<name>')
+@cross_origin()
 def rating_of(name:str):
   '''
   Return the User's rating (decrease)
@@ -64,6 +71,10 @@ def rating_of(name:str):
   :return json{"rating":int}: the User's rating
   '''
   user = User.query.filter_by(name=name).first()
+  
+  if not user:
+    return Response(status=404) # doesn't exists
+  
   rating = user.rating
   
   return json.dumps({"rating":rating})

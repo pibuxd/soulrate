@@ -1,7 +1,7 @@
 from os import environ, path
 
 from flask import Flask
-from flask_login import LoginManager
+from flask_cors import CORS
 from flask_migrate import Migrate
 
 from . import db
@@ -20,10 +20,16 @@ def create_app():
   POSTGRES_DB = "postgres"
   
   app = Flask(__name__)
+  
+  cors = CORS(app, resources={r"/*": {"origins": "*"}}) # !IMPORTANT
+  app.config["CORS_SUPPORTS_CREDENTIALS"] = True    # !IMPORTANT
+  app.config['CORS_ALLOW_HEADERS'] = 'Content-Type' # !IMPORTANT
+  
   app.config['SECRET_KEY'] = 'lolxd123'
   app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_PATH}'
   #app.config['SQLALCHEMY_DATABASE_URI'] = f'postgres://{POSTGRES_USER}:{POSTGRES_PW}@{POSTGRES_URL}/{POSTGRES_DB}'
   app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+  
   db.init_app(app)
   
   from src.api.auth import auth
@@ -39,14 +45,6 @@ def create_app():
   from src.models import User
   
   create_database(app, DB_PATH)
-  
-  login_manager = LoginManager()
-  login_manager.login_view = 'auth.login'
-  login_manager.init_app(app)
-  
-  @login_manager.user_loader
-  def load_user(id:int):
-    return User.query.get(int(id))
   
   return app
 

@@ -1,16 +1,16 @@
-from flask_login import current_user, login_required
 from src.models import User
 
 from .. import db
 
 
-def change_rating(name:str, add:int) -> bool:
+def change_rating(name:str, add:int, token:str) -> bool:
   '''
   Change the User's rating
   :param name: is name of the user
   :param add: is a value of added or subtracted rating
   '''
   user = User.query.filter_by(name=name).first()
+  current = User.query.filter_by(token=token).first()
   
   _upvoted = str(user.upvoted)
   _downvoted = str(user.downvoted)
@@ -18,7 +18,7 @@ def change_rating(name:str, add:int) -> bool:
   downvoted = [*map(int, _downvoted.split())] # split string to list of ints
   upvoted = [*map(int, _upvoted.split())]
   
-  _id = current_user.id
+  _id = current.id
   to_remove = 0
   
   if add > 0:

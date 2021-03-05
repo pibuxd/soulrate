@@ -1,5 +1,4 @@
 from flask import Blueprint, Response, json
-from flask_login import current_user, login_required
 from src.models import User
 
 from .. import db

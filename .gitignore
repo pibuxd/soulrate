@@ -3,6 +3,7 @@
 .vscode/
 .idea/
 .idea_modules/
+.history/
 
 # pycache binaries
 .pytest_cache/

@@ -1,12 +1,12 @@
 <template>
-  <header>
-    <h3>{{ text }}</h3>
-    <ButtonSubmit />
-  </header>
+  <div>
+    <h2>Search for a user:</h2>
+    <Bar />
+  </div>
 </template>
 
 <script>
-import ButtonSubmit from './ButtonSubmit.vue'
+import Bar from './Bar.vue'
 
 export default {
   name: 'SearchBar',
@@ -14,18 +14,7 @@ export default {
     text: String,
   },
   components: {
-    ButtonSubmit,
+    Bar,
   },
 }
 </script>
-
-<style scoped>
-  @import '/css/style.css';
-
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-</style>
