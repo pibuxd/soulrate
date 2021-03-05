@@ -1,41 +1,80 @@
 <template>
   <div>
-    <div v-if="rating == null">
-      <p><b>{{ $route.params.name }}</b> not found</p>
+    <div v-if="this.$cookies.isKey('token')">
+      <div v-if="rating == null">
+        <p><b>{{ $route.params.name }}</b> not found</p>
+      </div>
+      <div v-else>
+        <h2>Rating of user {{ $route.params.name }} is {{ rating }} </h2>
+        <button type="uprate" @click="uprate">Uprate</button>
+        <button type="downrate" @click="downrate">Uprate</button>
+      </div>
     </div>
     <div v-else>
-      <h2>Rating of user {{ $route.params.name }} is {{ rating }}</h2>
-      <ButtonUprate />
-      <ButtonDownrate />
+      <p><b>You have to be logged to evaluate</b></p>
     </div>
   </div>
+
 </template>
 
 <script>
-import ButtonUprate from '../components/ChangeRating/ButtonUprate.vue'
-import ButtonDownrate from '../components/ChangeRating/ButtonDownrate.vue'
-
 export default {
   name: 'Profile',
-
-  components: {
-    ButtonUprate,
-    ButtonDownrate,
-  },
   
   data: function () {
     return {
       rating: null,
     }
   },
+
+  methods: {
+    async requestRating() {
+      var x = true
+      while(x){
+        await this.$axios.get('rating/' + this.$route.params.name)
+          .then(response => {
+            this.rating = response.data.rating
+          })
+          .catch(err => {
+            console.log(err)
+          })
+
+        await new Promise(resolve => setTimeout(resolve, 2000))
+      }
+    },
+    getRating() {
+      this.$axios.get('rating/' + this.$route.params.name)
+          .then(response => {
+            this.rating = response.data.rating
+          })
+          .catch(err => {
+            console.log(err)
+          })
+    },
+    uprate() {
+      this.$axios.get('uprate/' + this.$route.params.name, {withCredentials: true})
+        .then(response => {
+          console.log(response)
+          this.getRating();
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    downrate() {
+      this.$axios.get('downrate/' + this.$route.params.name, {withCredentials: true})
+        .then(response => {
+          console.log(response)
+          this.getRating();
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  },
+
   created () {
-    this.$axios.get('rating/' + this.$route.params.name)
-      .then(response => {
-        this.rating = response.data.rating
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    this.requestRating();
   }
 
 }

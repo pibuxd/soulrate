@@ -22,6 +22,7 @@ export default {
       token: '',
     };
   },
+  
   methods: {
     formSubmit() {
       console.log(this.form)
