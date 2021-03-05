@@ -26,14 +26,14 @@ def create_app():
   app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
   db.init_app(app)
   
-  from src.api.auth import auth
-  from src.api.home import views
-  from src.api.profile import profile
   from src.api.rating import rating
+  from src.auth import auth
+  from src.profile import profile
+  from src.views import views
   
-  app.register_blueprint(views, url_prefix='/api')
-  app.register_blueprint(auth, url_prefix='/api')
-  app.register_blueprint(profile, url_prefix='/api')
+  app.register_blueprint(views, url_prefix='/')
+  app.register_blueprint(auth, url_prefix='/')
+  app.register_blueprint(profile, url_prefix='/')
   app.register_blueprint(rating, url_prefix='/api')
   
   from src.models import User

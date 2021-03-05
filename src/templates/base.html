@@ -15,12 +15,6 @@
 </head>
 
 <body>
-    <div class="navbar">
-        <a href="/">Home</a> {% if username == "guest" %}
-        <a href="/login">Login</a>
-        <a href="/sign-up">Sign up</a> {% else %}
-        <a href="/logout">Logout</a> {% endif %}
-    </div>
     {% block content %} {% endblock %}
 </body>
 

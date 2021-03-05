@@ -1,12 +1,14 @@
-from flask import Blueprint, Response, json
+from flask import Blueprint, json, render_template
 from flask_login import current_user, login_required
+
 from src.models import User
 
-from .. import db
+from . import db
 
 profile = Blueprint('profile', __name__)
 
 
+@login_required
 @profile.route('/<name>')
 def info(name:str):
   '''
@@ -18,6 +20,6 @@ def info(name:str):
   if user:
     username = user.name
     rating = user.rating
-    return json.dumps({"username":username, "rating":rating})
+    return render_template("profile.html", username=username, rating=rating)
   else:
-    return Response(status=404) # doesn't exists
+    return f"<b>{name}</b> doesn\'t exisits"

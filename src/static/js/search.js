@@ -1,12 +1,9 @@
-// functions to export
-let exports = {}
-
 /**
  * Returns strings that can complete input
  * @param {*} inp input from form
  * @param {*} arr array with available strings
  */
-exports.autocomplete = (inp, arr) => {
+function autocomplete(inp, arr) {
     var currentFocus;
     inp.addEventListener("input", function(e) {
         var a, b, i, val = this.value;
@@ -82,14 +79,8 @@ exports.autocomplete = (inp, arr) => {
 /**
  * Redirects to loaded input profile
  */
-/*function redirectProfile() {
+function redirectProfile() {
     var input = document.getElementById("myInput").value;
     console.log(input)
     location.assign(`/${input}`)
-}*/
-
-exports.f = () => {
-    console.log("f")
 }
-
-export default exports
