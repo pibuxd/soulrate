@@ -6,8 +6,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   name: 'Welcome',
 
@@ -18,7 +16,7 @@ export default {
     }
   },
   created () {
-    axios.get('http://0.0.0.0:5000/api/home', {withCredentials: true})
+    this.$axios.get('http://0.0.0.0:5000/api/home', {withCredentials: true})
       .then(response => {
         this.username = response.data.username
         this.rating = response.data.rating

@@ -11,9 +11,18 @@ import Welcome from '../components/Home/Welcome.vue'
 
 export default {
   name: 'Home',
+
   components: {
     SearchBar,
     Welcome,
+  },
+
+  created () {
+    var isToken = this.$cookies.isKey('token')
+
+    if(!isToken) {
+      this.$router.push("/login")
+    }
   }
 }
 </script>

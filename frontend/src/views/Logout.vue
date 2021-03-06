@@ -6,7 +6,7 @@
 export default {
   name: 'Logout',
 
-  mounted() {
+  created() {
     this.$cookies.remove("token")
     this.$router.push("/")
   }
