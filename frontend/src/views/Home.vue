@@ -23,6 +23,7 @@ export default {
     if(!isToken) {
       this.$router.push("/login")
     }
-  }
+  },
+
 }
 </script>

@@ -1,4 +1,4 @@
-# soulrate
+# Soulrate
 
 ## Project setup
 ```

@@ -22,15 +22,12 @@
 	<p>&nbsp;</p>
 	<p align="center">
 		<strong>
-			Soulrate is a service where people evaluate each other
+			Soulrate is a service where people evaluate each other.
+			You can create an account and then start making the world great again.
 		</strong>
 	</p>
 	<p>&nbsp;</p>
 </div>
-
-## How does it work?
-
-You can create an account then you can start rating other users
 
 ## Installation
 
@@ -41,6 +38,7 @@ git clone github.com/pibuxd/soulrate
 cd soulrate
 python -m pip install -r ./requirements.txt
 ```
+[Frontend installation and deployment](https://github.com/pibuxd/soulrate/blob/master/frontend/README.md)
 
 ## Deployment
 

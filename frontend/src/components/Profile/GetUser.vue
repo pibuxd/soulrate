@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h2>Rating of user {{ $route.params.name }} is <a id="rating"></a> </h2>
+    <h2>Rating of user {{ $route.params.name }} is {{ rating }} </h2>
     <button type="uprate" @click="uprate">Uprate</button>
     <button type="downrate" @click="downrate">Downrate</button>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -12,22 +12,45 @@ import libRating from '../../assets/js/rating.js';
 export default {
   data: function () {
     return {
-      rating: null
+      rating: null,
+      x: true
     }
   },
 
   methods: {
-    uprate() {
-      libRating.uprate(this.$route.params.name)
+    delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
     },
-    downrate() {
-      libRating.downrate(this.$route.params.name)
+
+    async requestRating() {
+      var resp = await libRating.requestRating(this.$route.params.name)
+      this.rating = resp.rating
+    },
+
+    async uprate() {
+      await libRating.uprate(this.$route.params.name)
+      this.requestRating()
+    },
+
+     async downrate() {
+      await libRating.downrate(this.$route.params.name)
+      this.requestRating()
     },
   },
 
-  created () {
-    libRating.requestRating(this.$route.params.name);
-  }
+  async created () {
+    this.x = true
+
+    while(this.x){
+      this.requestRating();
+      await this.delay(4000)
+    }
+  },
+
+  destroyed() {
+    this.x = false;
+    console.log("destroyed")
+  },
 }
 </script>
 

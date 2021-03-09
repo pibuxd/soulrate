@@ -13,7 +13,7 @@ def home():
   token = request.cookies.get("token")
   
   if not token: # !NOT LOGGED
-    return json.dumps({"username": "guest"})
+    return Response(status=401) # not authenticated
   
   token = request.cookies.get("token")
   print(token)

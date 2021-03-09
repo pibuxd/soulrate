@@ -1,12 +1,13 @@
 <template>
   <form autocomplete="off" @submit.prevent="redirect">
-    <input type="text" name="name" v-model="name" placeholder="Enter username" />
+    <input type="text" v-model="name">
     <button type="submit">Search</button>
   </form>
 </template>
 
 <script>
-//import jd from '../../assets/js/search.js';
+//import libSearch from '../../assets/js/search.js';
+import libHome from '../../assets/js/home.js';
 
 export default {
   name: 'Bar',
@@ -17,12 +18,11 @@ export default {
     };
   },
 
-  mounted() {
-    //getRating('{{ username }}')
-    //jd.asyncGetRating('{{ username }}', 2)
-    var usernames = ["xd", "jd"];
+  async mounted() {
+    var resp = await libHome.requestHome();
+    var usernames =  resp.names
     console.log(usernames)
-    //jd.autocomplete(document.getElementById("myInput"), usernames);
+
   },
 
   methods: {
