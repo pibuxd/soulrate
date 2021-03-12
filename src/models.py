@@ -12,8 +12,8 @@ class User(db.Model, UserMixin):
   password = db.Column(db.String(200))
   token = db.Column(db.String(200), unique=True)
   rating = db.Column(db.Integer, default=0)
-  upvoted = db.Column(db.String(1000000), default="")
-  downvoted = db.Column(db.String(1000000), default="")
+  uprated = db.Column(db.String(1000000), default="")
+  downrated = db.Column(db.String(1000000), default="")
   ip = db.Column(db.String(150))
   
   

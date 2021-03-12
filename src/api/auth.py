@@ -53,14 +53,20 @@ def sign_up():
     return Response(status=409) # already exists
   
   ip = request.remote_addr
-
+  gen_passwd = generate_password_hash(password, method='sha256')
+  gen_token = generate_token()
+  
+  # if token exists generate new again
+  while(bool(User.query.filter_by(token=gen_token).first())):
+    gen_token = generate_token()
+    
   new_user = User(
     name = name,
-    token = generate_token(),
-    password = generate_password_hash(password, method='sha256'),
+    token = gen_token,
+    password = gen_passwd,
     ip = ip
   )
-  
+    
   if bool(User.query.filter_by(name=name).first()):
     print(f'log: account \"{name}\" didn\'t created -> exists')
     return Response(status=409) # already exists

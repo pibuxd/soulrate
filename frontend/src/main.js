@@ -5,18 +5,21 @@ import VueCookies from 'vue-cookies';
 // global css
 import './assets/css/style.css'
 
+// axios config
+import axiosConfig from './assets/js/configs/axios'
+
+// router
 import router from './router'
 
-Vue.config.productionTip = false
-
+// deploy cookies
 Vue.use(VueCookies);
+
+// default cookies
 Vue.$cookies.set('theme', 'white');
 
-import axios from 'axios'
-const axiosConfig = {
-    baseURL: 'http://0.0.0.0:5000/api/',
-};
-Vue.prototype.$axios = axios.create(axiosConfig)
+Vue.prototype.$axios = axiosConfig;
+
+Vue.config.productionTip = false
 
 new Vue({
     router,

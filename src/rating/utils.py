@@ -12,31 +12,31 @@ def change_rating(name:str, add:int, token:str) -> bool:
   user = User.query.filter_by(name=name).first()
   current = User.query.filter_by(token=token).first()
   
-  _upvoted = str(user.upvoted)
-  _downvoted = str(user.downvoted)
+  _uprated = str(user.uprated)
+  _downrated = str(user.downrated)
 
-  downvoted = [*map(int, _downvoted.split())] # split string to list of ints
-  upvoted = [*map(int, _upvoted.split())]
+  downrated = [*map(int, _downrated.split())] # split string to list of ints
+  uprated = [*map(int, _uprated.split())]
   
   _id = current.id
   to_remove = 0
   
   if add > 0:
-    for ID in upvoted:
+    for ID in uprated:
       if ID == _id:
         return False
       
-    for ID in downvoted:
+    for ID in downrated:
       if ID == _id:
         to_remove = int(_id)
         add *= 2
   else:
-    for ID in upvoted:
+    for ID in uprated:
       if ID == _id:
         to_remove = int(_id)
         add *= 2
       
-    for ID in downvoted:
+    for ID in downrated:
       if ID == _id:
         return False
   
@@ -44,21 +44,21 @@ def change_rating(name:str, add:int, token:str) -> bool:
   
   if to_remove:
     if add > 0:
-      upvoted = change_string(upvoted, _id)
-      downvoted = change_string(downvoted, 0, to_remove)
+      uprated = change_string(uprated, _id)
+      downrated = change_string(downrated, 0, to_remove)
     else:
-      downvoted = change_string(downvoted, _id)
-      upvoted = change_string(upvoted, 0, to_remove)
+      downrated = change_string(downrated, _id)
+      uprated = change_string(uprated, 0, to_remove)
   else:
     if add > 0:
-      upvoted = change_string(upvoted, _id)
-      downvoted = change_string(downvoted)
+      uprated = change_string(uprated, _id)
+      downrated = change_string(downrated)
     else:
-      downvoted = change_string(downvoted, _id)
-      upvoted = change_string(upvoted)
+      downrated = change_string(downrated, _id)
+      uprated = change_string(uprated)
     
-  user.upvoted = str(upvoted)
-  user.downvoted = str(downvoted)
+  user.uprated = str(uprated)
+  user.downrated = str(downrated)
   db.session.commit()
   
   return True

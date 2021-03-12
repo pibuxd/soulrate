@@ -1,19 +1,32 @@
-import axios from 'axios';
-
-axios.defaults.baseURL = 'http://0.0.0.0:5000/api/';
+import axios from './configs/axios';
 
 let exports = {};
 
+/**
+ * rating of the user
+ * @param {*} name
+ * @returns response.data from api/rating
+ */
 exports.requestRating = async(name) => {
     return (await axios.get('rating/' + name, { withCredentials: true }))
         .data
 }
 
+/**
+ * uprate user's rating
+ * @param {*} name 
+ * @returns response code
+ */
 exports.uprate = async(name) => {
     return (await axios.get('uprate/' + name, { withCredentials: true }))
         .data
 }
 
+/**
+ * downrate user's rating
+ * @param {*} name 
+ * @returns response code
+ */
 exports.downrate = async(name) => {
     return (await axios.get('downrate/' + name, { withCredentials: true }))
         .data
